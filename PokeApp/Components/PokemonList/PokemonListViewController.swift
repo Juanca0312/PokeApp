@@ -6,10 +6,14 @@
 //
 
 import UIKit
+import Combine
 
 class PokemonListViewController: UIViewController {
     
     private let pokemonListView = PokemonListView()
+    private let viewModel = PokemonListViewModel()
+    var anyCancellable: [AnyCancellable] = []
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -17,7 +21,19 @@ class PokemonListViewController: UIViewController {
         
         setGradientBackground()
         setUpView()
+        viewModel.fetchPokemons()
+        subscription()
     }
+    
+    private func subscription() {
+        viewModel.$pokemonList.sink { data in
+            print(data?[0])
+            DispatchQueue.main.async {
+                self.pokemonListView.collectionView.reloadData()
+            }
+        }.store(in: &anyCancellable)
+    }
+    
     
     private func setUpView() {
         
@@ -53,13 +69,14 @@ class PokemonListViewController: UIViewController {
 
 extension PokemonListViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 20
+        return viewModel.pokemonList?.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
         
         cell.backgroundColor = .systemBlue
+        
         
         return cell
     }
