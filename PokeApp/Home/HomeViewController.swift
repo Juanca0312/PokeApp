@@ -17,6 +17,7 @@ final class HomeViewController: UINavigationController {
     private func setUpView() {
         let vc = PokemonListViewController()
         vc.navigationItem.largeTitleDisplayMode = .automatic
+        self.navigationBar.prefersLargeTitles = true
         
         viewControllers = [vc]
         
