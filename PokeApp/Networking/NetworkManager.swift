@@ -21,7 +21,7 @@ final class NetworkManager {
         completion: @escaping (Result<T, Error>) -> Void
     ) {
         
-        guard let url = request.endpoint.url() else { preconditionFailure("Invalid URL") }
+        guard let url = request.endpoint.url(queryItems: request.queryItems) else { preconditionFailure("Invalid URL") }
         var urlRequest = URLRequest(url: url)
         urlRequest.httpMethod = request.method.rawValue
         

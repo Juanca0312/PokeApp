@@ -10,20 +10,29 @@ import Combine
 
 protocol PokemonServiceProtocol {
     
-    func getAllPokemons(completion: @escaping (Result<PokemonListResponse, Error>) -> Void)
+    func getAllPokemons(offSet: Int, completion: @escaping (Result<PokemonListResponse, Error>) -> Void)
 }
 
 struct PokemonService: PokemonServiceProtocol {
     
+    public static let pageLimit = 30
+    
     
     private var networkManager: NetworkManager = NetworkManager.shared
     
-    func getAllPokemons(completion: @escaping (Result<PokemonListResponse, Error>) -> Void) {
+    func getAllPokemons(offSet: Int, completion: @escaping (Result<PokemonListResponse, Error>) -> Void) {
         
-        let request = Request(endpoint: .pokemon)
+        var queryItems = [
+            URLQueryItem(name: "limit", value: String(PokemonService.pageLimit))
+        ]
+        var request = Request(endpoint: .pokemon, queryItems: queryItems)
+        if offSet != 0 {
+            queryItems.append(URLQueryItem(name: "offset", value: String(offSet)))
+            request = Request(endpoint: .pokemon,queryItems: queryItems )
+        }
+        
         
         networkManager.execute(request, expecting: PokemonListResponse.self, completion: completion)
-        
     }
     
     
