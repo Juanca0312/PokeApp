@@ -8,12 +8,15 @@
 import UIKit
 
 class PokemonListView: UIView {
-
-    private let spinner: UIActivityIndicatorView = {
-        let spinner = UIActivityIndicatorView(style: .large)
-        spinner.hidesWhenStopped = true
-        spinner.translatesAutoresizingMaskIntoConstraints = false
-        return spinner
+    
+    private let spinner: UIImageView = {
+        let pokeball = UIImageView()
+        pokeball.contentMode = .scaleAspectFit
+        pokeball.clipsToBounds = true
+        pokeball.translatesAutoresizingMaskIntoConstraints = false
+        pokeball.image = UIImage(named: "Pokeball")
+        pokeball.rotate()
+        return pokeball
     }()
     
     let collectionView: UICollectionView = {
@@ -70,15 +73,16 @@ class PokemonListView: UIView {
             collectionView.isHidden = true
             collectionView.alpha = 0
             
-            spinner.startAnimating()
         } else {
             //TODO: remove asyncAfter to simulate more loading
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                self.spinner.stopAnimating()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+
                 self.collectionView.isHidden = false
-                UIView.animate(withDuration: 0.4) {
+                UIView.animate(withDuration: 1) {
+                    self.spinner.alpha = 0
                     self.collectionView.alpha = 1
                 }
+                
             }
 
         }

@@ -10,11 +10,13 @@ import UIKit
 class LoadingCollectionReusableView: UICollectionReusableView {
     static let identifier = "LoadingCollectionReusableView"
     
-    private let spinner: UIActivityIndicatorView = {
-        let spinner = UIActivityIndicatorView(style: .large)
-        spinner.hidesWhenStopped = true
-        spinner.translatesAutoresizingMaskIntoConstraints = false
-        return spinner
+    private let spinner: UIImageView = {
+        let pokeball = UIImageView()
+        pokeball.contentMode = .scaleAspectFit
+        pokeball.clipsToBounds = true
+        pokeball.translatesAutoresizingMaskIntoConstraints = false
+        pokeball.image = UIImage(named: "Pokeball")
+        return pokeball
     }()
     
     override init(frame: CGRect) {
@@ -30,14 +32,14 @@ class LoadingCollectionReusableView: UICollectionReusableView {
     
     private func addContraints() {
         NSLayoutConstraint.activate([
-            spinner.widthAnchor.constraint(equalToConstant: 100),
-            spinner.heightAnchor.constraint(equalToConstant: 100),
+            spinner.widthAnchor.constraint(equalToConstant: 70),
+            spinner.heightAnchor.constraint(equalToConstant: 70),
             spinner.centerXAnchor.constraint(equalTo: centerXAnchor),
             spinner.centerYAnchor.constraint(equalTo: centerYAnchor),
         ])
     }
     
     public func startAnimating() {
-        spinner.startAnimating()
+        spinner.rotate()
     }
 }
