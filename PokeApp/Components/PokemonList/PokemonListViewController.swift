@@ -13,6 +13,8 @@ class PokemonListViewController: UIViewController {
     private let pokemonListView = PokemonListView()
     private let viewModel = PokemonListViewModel()
     var anyCancellable: [AnyCancellable] = []
+    private var currentOffSet = 0
+    private var fetchingNextPage = false
     
     
     override func viewDidLoad() {
@@ -26,11 +28,17 @@ class PokemonListViewController: UIViewController {
     }
     
     private func subscription() {
-        viewModel.$pokemonList.sink { data in
+        viewModel.$pokemonListResponse.sink { [weak self] data in
+            
+            guard let self = self else { return }
             
             DispatchQueue.main.async {
                 self.pokemonListView.collectionView.reloadData()
             }
+            
+            //did load more data
+            self.fetchingNextPage = false
+            
         }.store(in: &anyCancellable)
         
         viewModel.$isLoading.sink { [weak self] isLoading in
@@ -77,14 +85,14 @@ class PokemonListViewController: UIViewController {
 
 extension PokemonListViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.pokemonList?.count ?? 0
+        return viewModel.pokemonList.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let pokemon = viewModel.pokemonList?[indexPath.row] , let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PokemonCollectionViewCell.cellIdentifier, for: indexPath) as? PokemonCollectionViewCell else {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PokemonCollectionViewCell.cellIdentifier, for: indexPath) as? PokemonCollectionViewCell else {
             fatalError("Unsoported cell")
         }
-        
+        let pokemon = viewModel.pokemonList[indexPath.row]
         //TODO: Persist cell view models on array
         let vm = PokemonCollectionViewCellViewModel(pokemonName: pokemon.name, pokemonImageUrl: pokemon.pokemonUrl)
         cell.configure(with: vm)
@@ -117,7 +125,19 @@ extension PokemonListViewController: UICollectionViewDelegate, UICollectionViewD
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        print(indexPath.row)
+        
+        guard !fetchingNextPage else { return }
+        
+        if indexPath.row > viewModel.pokemonList.count - 4 {
+            fetchingNextPage = true
+            currentOffSet += PokemonService.pageLimit
+            
+            //TODO: remove or edit asyncAfter to simulate loading
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                self.viewModel.fetchPokemons(offSet: self.currentOffSet)
+                
+            }
+        }
     }
     
     

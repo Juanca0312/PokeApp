@@ -10,26 +10,38 @@ import Combine
 
 class PokemonListViewModel {
     private let pokemonService: PokemonServiceProtocol
-    @Published var pokemonList: [PokemonListItem]?
+    public var pokemonList: [PokemonListItem] = []
+    @Published var pokemonListResponse: PokemonListResponse?
     @Published var isLoading : Bool?
     
     init(pokemonService: PokemonServiceProtocol = PokemonService()) {
         self.pokemonService = pokemonService
     }
     
-    func fetchPokemons() {
-        isLoading = true
-        pokemonService.getAllPokemons {[weak self] result in
+    func fetchPokemons(offSet: Int = 0) {
+        
+        // only first call
+        if pokemonList.isEmpty { self.isLoading = true }
+        pokemonService.getAllPokemons(offSet: offSet) {[weak self] result in
             guard let self = self else { return }
             switch result {
             case .success(let response):
-                self.isLoading = false
-                pokemonList = response.results
+                
+                //only first call
+                if pokemonList.isEmpty { self.isLoading = false }
+                
+                pokemonListResponse = response
+                if offSet == 0 {
+                    pokemonList = response.results
+                } else {
+                    pokemonList.append(contentsOf: response.results)
+                }
+                
             case .failure(let failure):
                 print(failure)
                 //TODO: manage error
-                isLoading = false
-                pokemonList = nil
+                if pokemonList.isEmpty { self.isLoading = false }
+                pokemonListResponse = nil
             }
         }
     }

@@ -74,7 +74,7 @@ class PokemonListView: UIView {
             collectionView.alpha = 0
             
         } else {
-            //TODO: remove asyncAfter to simulate more loading
+            //TODO: remove or edit asyncAfter to simulate loading
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
 
                 self.collectionView.isHidden = false
