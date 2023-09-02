@@ -25,8 +25,11 @@ class PokemonListView: UIView {
         collectionView.backgroundColor = .clear
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.register(PokemonCollectionViewCell.self, forCellWithReuseIdentifier: PokemonCollectionViewCell.cellIdentifier)
+        collectionView.register(LoadingCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: LoadingCollectionReusableView.identifier)
+        
         return collectionView
     }()
+    
     
     // MARK: - Init
     
@@ -61,7 +64,7 @@ class PokemonListView: UIView {
         ])
     }
     
-    // MARK: - First loading functions
+    // MARK: - First loading function
     public func showFirstLoading(isLoading: Bool) {
         if isLoading {
             collectionView.isHidden = true
