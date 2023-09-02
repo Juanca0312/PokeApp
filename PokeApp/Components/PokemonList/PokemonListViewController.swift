@@ -27,7 +27,7 @@ class PokemonListViewController: UIViewController {
     
     private func subscription() {
         viewModel.$pokemonList.sink { data in
-            print(data?[0])
+            
             DispatchQueue.main.async {
                 self.pokemonListView.collectionView.reloadData()
             }
@@ -67,18 +67,30 @@ class PokemonListViewController: UIViewController {
 }
 
 
-extension PokemonListViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+extension PokemonListViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return viewModel.pokemonList?.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
+        guard let pokemon = viewModel.pokemonList?[indexPath.row] , let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PokemonCollectionViewCell.cellIdentifier, for: indexPath) as? PokemonCollectionViewCell else {
+            fatalError("Unsoported cell")
+        }
         
-        cell.backgroundColor = .systemBlue
+        //TODO: Persist cell view models on array
+        let vm = PokemonCollectionViewCellViewModel(pokemonName: pokemon.name, pokemonImageUrl: pokemon.pokemonUrl)
+        cell.configure(with: vm)
+        print(vm.pokemonName)
         
         
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
+        let bounds = UIScreen.main.bounds
+        let width = (bounds.width - 30) / 2
+        return CGSize(width: width, height: width * 1.4)
     }
     
     

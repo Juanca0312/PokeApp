@@ -27,7 +27,7 @@ class PokemonListView: UIView {
         //collectionView.isHidden = true
         //collectionView.alpha = 0 //opacity
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cell")
+        collectionView.register(PokemonCollectionViewCell.self, forCellWithReuseIdentifier: PokemonCollectionViewCell.cellIdentifier)
         return collectionView
     }()
     
@@ -38,7 +38,7 @@ class PokemonListView: UIView {
         translatesAutoresizingMaskIntoConstraints = false
 
         addSubview(collectionView)
-        addSubview(spinner)
+        //addSubview(spinner)
         addConstraints()
 
         spinner.startAnimating()
@@ -50,10 +50,10 @@ class PokemonListView: UIView {
     
     private func addConstraints() {
         NSLayoutConstraint.activate([
-            spinner.widthAnchor.constraint(equalToConstant: 100),
-            spinner.heightAnchor.constraint(equalToConstant: 100),
-            spinner.centerXAnchor.constraint(equalTo: centerXAnchor),
-            spinner.centerYAnchor.constraint(equalTo: centerYAnchor),
+            //spinner.widthAnchor.constraint(equalToConstant: 100),
+            //spinner.heightAnchor.constraint(equalToConstant: 100),
+            //spinner.centerXAnchor.constraint(equalTo: centerXAnchor),
+            //spinner.centerYAnchor.constraint(equalTo: centerYAnchor),
             
             collectionView.topAnchor.constraint(equalTo: topAnchor),
             collectionView.leftAnchor.constraint(equalTo: leftAnchor),
