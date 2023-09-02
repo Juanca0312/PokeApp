@@ -8,7 +8,6 @@
 import UIKit
 
 class PokemonListView: UIView {
-    
 
     private let spinner: UIActivityIndicatorView = {
         let spinner = UIActivityIndicatorView(style: .large)
@@ -24,8 +23,6 @@ class PokemonListView: UIView {
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .clear
-        //collectionView.isHidden = true
-        //collectionView.alpha = 0 //opacity
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.register(PokemonCollectionViewCell.self, forCellWithReuseIdentifier: PokemonCollectionViewCell.cellIdentifier)
         return collectionView
@@ -38,11 +35,12 @@ class PokemonListView: UIView {
         translatesAutoresizingMaskIntoConstraints = false
 
         addSubview(collectionView)
-        //addSubview(spinner)
+        addSubview(spinner)
         addConstraints()
 
         spinner.startAnimating()
     }
+    
     
     required init?(coder: NSCoder) {
         fatalError("Unsopported")
@@ -50,10 +48,10 @@ class PokemonListView: UIView {
     
     private func addConstraints() {
         NSLayoutConstraint.activate([
-            //spinner.widthAnchor.constraint(equalToConstant: 100),
-            //spinner.heightAnchor.constraint(equalToConstant: 100),
-            //spinner.centerXAnchor.constraint(equalTo: centerXAnchor),
-            //spinner.centerYAnchor.constraint(equalTo: centerYAnchor),
+            spinner.widthAnchor.constraint(equalToConstant: 100),
+            spinner.heightAnchor.constraint(equalToConstant: 100),
+            spinner.centerXAnchor.constraint(equalTo: centerXAnchor),
+            spinner.centerYAnchor.constraint(equalTo: centerYAnchor),
             
             collectionView.topAnchor.constraint(equalTo: topAnchor),
             collectionView.leftAnchor.constraint(equalTo: leftAnchor),
@@ -62,6 +60,27 @@ class PokemonListView: UIView {
             
         ])
     }
+    
+    // MARK: - First loading functions
+    public func showFirstLoading(isLoading: Bool) {
+        if isLoading {
+            collectionView.isHidden = true
+            collectionView.alpha = 0
+            
+            spinner.startAnimating()
+        } else {
+            //TODO: remove asyncAfter to simulate more loading
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                self.spinner.stopAnimating()
+                self.collectionView.isHidden = false
+                UIView.animate(withDuration: 0.4) {
+                    self.collectionView.alpha = 1
+                }
+            }
+
+        }
+    }
+    
     
     
 }

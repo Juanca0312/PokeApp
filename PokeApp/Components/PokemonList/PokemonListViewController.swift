@@ -17,7 +17,7 @@ class PokemonListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Poke app"
+        title = "PokeApp"
         
         setGradientBackground()
         setUpView()
@@ -30,6 +30,14 @@ class PokemonListViewController: UIViewController {
             
             DispatchQueue.main.async {
                 self.pokemonListView.collectionView.reloadData()
+            }
+        }.store(in: &anyCancellable)
+        
+        viewModel.$isLoading.sink { [weak self] isLoading in
+            guard let isLoading = isLoading, let self = self else { return }
+            
+            DispatchQueue.main.async {
+                self.pokemonListView.showFirstLoading(isLoading: isLoading)
             }
         }.store(in: &anyCancellable)
     }
@@ -80,8 +88,6 @@ extension PokemonListViewController: UICollectionViewDelegate, UICollectionViewD
         //TODO: Persist cell view models on array
         let vm = PokemonCollectionViewCellViewModel(pokemonName: pokemon.name, pokemonImageUrl: pokemon.pokemonUrl)
         cell.configure(with: vm)
-        print(vm.pokemonName)
-        
         
         return cell
     }
