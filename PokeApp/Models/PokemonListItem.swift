@@ -23,7 +23,7 @@ extension PokemonListItem {
     
     private static let imagesStringUrl = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/"
     
-    var pokemonUrl: URL? {
+    var imageUrl: URL? {
         
         let pokemonImageStringUrl = PokemonListItem.imagesStringUrl + self.id + ".png"
         return URL(string: pokemonImageStringUrl)

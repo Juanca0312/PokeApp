@@ -92,10 +92,9 @@ extension PokemonListViewController: UICollectionViewDelegate, UICollectionViewD
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PokemonCollectionViewCell.cellIdentifier, for: indexPath) as? PokemonCollectionViewCell else {
             fatalError("Unsoported cell")
         }
-        let pokemon = viewModel.pokemonList[indexPath.row]
-        //TODO: Persist cell view models on array
-        let vm = PokemonCollectionViewCellViewModel(pokemonName: pokemon.name, pokemonImageUrl: pokemon.pokemonUrl)
-        cell.configure(with: vm)
+
+
+        cell.configure(with: viewModel.cellViewModels[indexPath.row])
         
         return cell
     }

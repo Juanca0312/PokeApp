@@ -7,7 +7,11 @@
 
 import Foundation
 
-class PokemonCollectionViewCellViewModel {
+class PokemonCollectionViewCellViewModel: Hashable {
+
+    
+
+    
     public let pokemonName: String
     private let pokemonImageUrl: URL?
     
@@ -35,5 +39,15 @@ class PokemonCollectionViewCellViewModel {
         }
         task.resume()
         
+    }
+    
+    // MARK: - Hash
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(pokemonName)
+        hasher.combine(pokemonImageUrl)
+    }
+    
+    static func == (lhs: PokemonCollectionViewCellViewModel, rhs: PokemonCollectionViewCellViewModel) -> Bool {
+        return lhs.hashValue == rhs.hashValue
     }
 }

@@ -10,7 +10,17 @@ import Combine
 
 class PokemonListViewModel {
     private let pokemonService: PokemonServiceProtocol
-    public var pokemonList: [PokemonListItem] = []
+    public var pokemonList: [PokemonListItem] = [] {
+        didSet {
+            for pokemon in pokemonList {
+                let viewModel = PokemonCollectionViewCellViewModel(pokemonName: pokemon.name, pokemonImageUrl: pokemon.imageUrl)
+                if !cellViewModels.contains(viewModel) {
+                    cellViewModels.append(viewModel)
+                }
+            }
+        }
+    }
+    public var cellViewModels: [PokemonCollectionViewCellViewModel] = []
     @Published var pokemonListResponse: PokemonListResponse?
     @Published var isLoading : Bool?
     
