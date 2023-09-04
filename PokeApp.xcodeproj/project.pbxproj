@@ -26,6 +26,7 @@
 		2DE1FEA12AA299C50042B0CA /* PokemonCollectionViewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DE1FEA02AA299C50042B0CA /* PokemonCollectionViewCellViewModel.swift */; };
 		2DE1FEA42AA2C42E0042B0CA /* LoadingCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DE1FEA32AA2C42E0042B0CA /* LoadingCollectionReusableView.swift */; };
 		2DE1FEA62AA2C9BA0042B0CA /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DE1FEA52AA2C9BA0042B0CA /* Extensions.swift */; };
+		2DE1FEA92AA5817F0042B0CA /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DE1FEA82AA5817F0042B0CA /* ImageLoader.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +51,7 @@
 		2DE1FEA02AA299C50042B0CA /* PokemonCollectionViewCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonCollectionViewCellViewModel.swift; sourceTree = "<group>"; };
 		2DE1FEA32AA2C42E0042B0CA /* LoadingCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingCollectionReusableView.swift; sourceTree = "<group>"; };
 		2DE1FEA52AA2C9BA0042B0CA /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		2DE1FEA82AA5817F0042B0CA /* ImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +85,7 @@
 			isa = PBXGroup;
 			children = (
 				2DE1FE7C2A9FBE490042B0CA /* Resources */,
+				2DE1FEA72AA581650042B0CA /* Managers */,
 				2DE1FE7B2A9FBE360042B0CA /* Models */,
 				2DE1FE7A2A9FBE2D0042B0CA /* Networking */,
 				2DE1FE922A9FED2F0042B0CA /* Services */,
@@ -178,6 +181,14 @@
 			path = LodingCollectionReusableView;
 			sourceTree = "<group>";
 		};
+		2DE1FEA72AA581650042B0CA /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				2DE1FEA82AA5817F0042B0CA /* ImageLoader.swift */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -251,6 +262,7 @@
 				2DE1FE982A9FEE660042B0CA /* PokemonListItem.swift in Sources */,
 				2DE1FE942A9FED3A0042B0CA /* PokemonService.swift in Sources */,
 				2DE1FE8B2A9FDBEB0042B0CA /* Endpoint.swift in Sources */,
+				2DE1FEA92AA5817F0042B0CA /* ImageLoader.swift in Sources */,
 				2DE1FE8D2A9FDCA60042B0CA /* Request.swift in Sources */,
 				2DE1FEA12AA299C50042B0CA /* PokemonCollectionViewCellViewModel.swift in Sources */,
 				2DE1FE912A9FEA6D0042B0CA /* NetworkManager.swift in Sources */,
