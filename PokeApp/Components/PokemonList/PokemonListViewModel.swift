@@ -40,12 +40,14 @@ class PokemonListViewModel {
                 //only first call
                 if pokemonList.isEmpty { self.isLoading = false }
                 
-                pokemonListResponse = response
                 if offSet == 0 {
                     pokemonList = response.results
                 } else {
                     pokemonList.append(contentsOf: response.results)
                 }
+                
+                pokemonListResponse = response
+                
                 
             case .failure(let failure):
                 print(failure)

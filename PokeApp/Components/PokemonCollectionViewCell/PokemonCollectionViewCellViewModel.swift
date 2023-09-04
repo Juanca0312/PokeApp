@@ -9,9 +9,6 @@ import Foundation
 
 class PokemonCollectionViewCellViewModel: Hashable {
 
-    
-
-    
     public let pokemonName: String
     private let pokemonImageUrl: URL?
     
