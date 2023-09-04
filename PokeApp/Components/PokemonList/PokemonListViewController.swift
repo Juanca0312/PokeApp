@@ -142,5 +142,12 @@ extension PokemonListViewController: UICollectionViewDelegate, UICollectionViewD
         }
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let viewModel = PokemonDetailViewModel(pokemon: self.viewModel.pokemonList[indexPath.row])
+        let detailVC = PokemonDetailViewController(viewModel: viewModel)
+        detailVC.navigationItem.largeTitleDisplayMode = .never
+        navigationController?.pushViewController(detailVC, animated: true)
+    }
+    
     
 }
