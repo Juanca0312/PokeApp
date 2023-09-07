@@ -9,9 +9,8 @@ import Foundation
 
 public struct Endpoint {
     
-    private struct K {
-        static let baseURL = "https://pokeapi.co/api/v2"
-    }
+    static let baseURL = "https://pokeapi.co/api/v2"
+    
     
     public var path: String
     
@@ -20,7 +19,7 @@ public struct Endpoint {
     }
     
     func url(queryItems: [URLQueryItem] = []) -> URL? {
-        guard var components = URLComponents(string: K.baseURL+path) else { return nil }
+        guard var components = URLComponents(string: Endpoint.baseURL+path) else { return nil }
         components.queryItems = queryItems
         return components.url
     }
@@ -28,8 +27,11 @@ public struct Endpoint {
 
 extension Endpoint {
     
-    static public var pokemon: Endpoint {
-        Endpoint(path: "/pokemon")
+    static public func pokemonEndpoint(id: Int? = nil) -> Endpoint {
+        if let id = id {
+            return Endpoint(path: "/pokemon/\(id)")
+        }
+        return Endpoint(path: "/pokemon")
     }
     
 }

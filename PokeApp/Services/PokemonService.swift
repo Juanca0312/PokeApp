@@ -11,6 +11,8 @@ import Combine
 protocol PokemonServiceProtocol {
     
     func getAllPokemons(offSet: Int, completion: @escaping (Result<PokemonListResponse, Error>) -> Void)
+    
+    func getPokemonById(id: Int, completion: @escaping (Result<Pokemon, Error>) -> Void)
 }
 
 struct PokemonService: PokemonServiceProtocol {
@@ -25,14 +27,21 @@ struct PokemonService: PokemonServiceProtocol {
         var queryItems = [
             URLQueryItem(name: "limit", value: String(PokemonService.pageLimit))
         ]
-        var request = Request(endpoint: .pokemon, queryItems: queryItems)
+        var request = Request(endpoint: .pokemonEndpoint(), queryItems: queryItems)
         if offSet != 0 {
             queryItems.append(URLQueryItem(name: "offset", value: String(offSet)))
-            request = Request(endpoint: .pokemon,queryItems: queryItems )
+            request = Request(endpoint: .pokemonEndpoint(),queryItems: queryItems )
         }
         
         
         networkManager.execute(request, expecting: PokemonListResponse.self, completion: completion)
+    }
+    
+    func getPokemonById(id: Int, completion: @escaping (Result<Pokemon, Error>) -> Void) {
+        
+        let request = Request(endpoint: .pokemonEndpoint(id: id))
+        
+        networkManager.execute(request, expecting: Pokemon.self, completion: completion)
     }
     
     

@@ -15,6 +15,8 @@ class PokemonDetailViewController: UIViewController {
     init(viewModel: PokemonDetailViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
+        
+        viewModel.fetchPokemon()
     }
     
     required init?(coder: NSCoder) {
