@@ -11,6 +11,14 @@ struct PokemonDetailViewModel {
     let pokemon: PokemonListItem
     private let pokemonService: PokemonServiceProtocol
     
+    enum SectionType: CaseIterable {
+        case images
+        case info
+        case stats
+        case damageRelations
+    }
+    
+    public let sections = SectionType.allCases
     
     init(pokemon: PokemonListItem, pokemonService: PokemonServiceProtocol = PokemonService()) {
         self.pokemon = pokemon

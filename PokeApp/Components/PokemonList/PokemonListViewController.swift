@@ -135,10 +135,11 @@ extension PokemonListViewController: UICollectionViewDelegate, UICollectionViewD
             currentOffSet += PokemonService.pageLimit
             
             //TODO: remove or edit asyncAfter to simulate loading
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                self.viewModel.fetchPokemons(offSet: self.currentOffSet)
-                
-            }
+//            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+//                self.viewModel.fetchPokemons(offSet: self.currentOffSet)
+//
+//            }
+            self.viewModel.fetchPokemons(offSet: self.currentOffSet)
         }
     }
     
