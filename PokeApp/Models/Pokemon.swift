@@ -16,3 +16,19 @@ struct Pokemon: Codable {
     let types: [`Type`]
     
 }
+
+extension Pokemon {
+    private static let imagesStringUrl = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/"
+    
+    var imageUrl: URL? {
+        
+        let pokemonImageStringUrl = Pokemon.imagesStringUrl + String(self.id) + ".png"
+        return URL(string: pokemonImageStringUrl)
+        
+    }
+    
+    var imageShinyUrl: URL? {
+        let pokemonImageStringUrl = Pokemon.imagesStringUrl + "shiny/" + String(self.id) + ".png"
+        return URL(string: pokemonImageStringUrl)
+    }
+}
