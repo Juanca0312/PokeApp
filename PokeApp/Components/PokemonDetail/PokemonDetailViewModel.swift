@@ -7,26 +7,53 @@
 
 import Foundation
 
-struct PokemonDetailViewModel {
+final class PokemonDetailViewModel {
     let pokemon: PokemonListItem
     private let pokemonService: PokemonServiceProtocol
     
-    enum SectionType: CaseIterable {
-        case images
-        case info
-        case stats
-        case damageRelations
+    enum SectionType {
+        case images(viewModels: [PokemonImagesCollectionViewCellViewModel])
+        case info(viewModels: [PokemonInfoCollectionViewCellViewModel])
+        case stats(viewModels: [PokemonStatsCollectionViewCellViewModel])
+        case damageRelations(viewModels: [PokemonDamageRelationsCollectionViewCellViewModel])
     }
     
-    public let sections = SectionType.allCases
+    public var sections : [SectionType] = []
     
     init(pokemon: PokemonListItem, pokemonService: PokemonServiceProtocol = PokemonService()) {
         self.pokemon = pokemon
         self.pokemonService = pokemonService
+        setUpSections()
+    }
+    
+    private func setUpSections() {
+        sections = [
+            .images(viewModels: [
+                .init(),
+                .init()
+            ]),
+            .info(viewModels: [
+                .init(),
+                .init(),
+                .init()
+            ]),
+            .stats(viewModels: [
+                .init(),
+                .init(),
+                .init(),
+                .init(),
+                .init(),
+                .init()
+            ]),
+            .damageRelations(viewModels: [
+                .init(),
+                .init(),
+            ])
+        ]
     }
     
     public var title: String {
-        pokemon.name.uppercased()
+        pokemon.name.capitalized
     }
     
     public func fetchPokemon() {
@@ -36,7 +63,7 @@ struct PokemonDetailViewModel {
         pokemonService.getPokemonById(id: intId) { resul in
             switch resul {
             case .success(let result):
-                print(String(describing: result))
+                print("resultados")
             case .failure(let failure):
                 print(String(describing: failure))
             }

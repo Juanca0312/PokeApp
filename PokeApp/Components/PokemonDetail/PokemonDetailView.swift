@@ -49,7 +49,10 @@ class PokemonDetailView: UIView {
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         
-        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cell")
+        collectionView.register(PokemonImagesCollectionViewCell.self, forCellWithReuseIdentifier: PokemonImagesCollectionViewCell.cellIdentifier)
+        collectionView.register(PokemonInfoCollectionViewCell.self, forCellWithReuseIdentifier: PokemonInfoCollectionViewCell.cellIdentifier)
+        collectionView.register(PokemonStatsCollectionViewCell.self, forCellWithReuseIdentifier: PokemonStatsCollectionViewCell.cellIdentifier)
+        collectionView.register(PokemonDamageRelationsCollectionViewCell.self, forCellWithReuseIdentifier: PokemonDamageRelationsCollectionViewCell.cellIdentifier)
         
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -78,6 +81,12 @@ class PokemonDetailView: UIView {
         
     }
     
+    
+}
+
+// MARK: - Layouts for Sections
+
+extension PokemonDetailView {
     private func createImagesSectionLayout() -> NSCollectionLayoutSection {
         let item = NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0)))
         item.contentInsets = NSDirectionalEdgeInsets(top: 10,
@@ -141,9 +150,4 @@ class PokemonDetailView: UIView {
         
         return section
     }
-    
-    
-    
-    
-    
 }

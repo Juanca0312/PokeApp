@@ -16,7 +16,7 @@ class PokemonDetailViewController: UIViewController {
         self.viewModel = viewModel
         self.pokemonDetailView = PokemonDetailView(frame: .zero, viewModel: viewModel)
         super.init(nibName: nil, bundle: nil)
-
+        
         viewModel.fetchPokemon()
     }
     
@@ -66,25 +66,56 @@ extension PokemonDetailViewController: UICollectionViewDelegate, UICollectionVie
         viewModel.sections.count
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        switch section {
-        case 0:
-            return 2
-        case 1:
-            return 3
-        case 2:
-            return 6
-        case 3:
-            return 2
-        default:
-            return 1
-            
+        
+        let sectionType = viewModel.sections[section]
+        
+        switch sectionType {
+        case .images(let viewModels):
+            return viewModels.count
+        case .info(let viewModels):
+            return viewModels.count
+        case .stats(let viewModels):
+            return viewModels.count
+        case .damageRelations(let viewModels):
+            return viewModels.count
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
-        cell.backgroundColor = .systemGreen
-        return cell
+        //dequeue based on section
+        let sectionType = viewModel.sections[indexPath.section]
+        
+        switch sectionType {
+        case .images(let viewModels):
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PokemonImagesCollectionViewCell.cellIdentifier, for: indexPath) as? PokemonImagesCollectionViewCell else {
+                fatalError()
+            }
+            cell.backgroundColor = .systemRed
+            cell.configure(with: viewModels[indexPath.row])
+            return cell
+        case .info(let viewModels):
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PokemonInfoCollectionViewCell.cellIdentifier, for: indexPath) as? PokemonInfoCollectionViewCell else {
+                fatalError()
+            }
+            cell.backgroundColor = .systemCyan
+            cell.configure(with: viewModels[indexPath.row])
+            return cell
+        case .stats(let viewModels):
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PokemonStatsCollectionViewCell.cellIdentifier, for: indexPath) as? PokemonStatsCollectionViewCell else {
+                fatalError()
+            }
+            cell.backgroundColor = .systemTeal
+            cell.configure(with: viewModels[indexPath.row])
+            return cell
+        case .damageRelations(let viewModels):
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PokemonDamageRelationsCollectionViewCell.cellIdentifier, for: indexPath) as? PokemonDamageRelationsCollectionViewCell else {
+                fatalError()
+            }
+            cell.backgroundColor = .systemMint
+            cell.configure(with: viewModels[indexPath.row])
+            return cell
+        }
+        
     }
     
     
