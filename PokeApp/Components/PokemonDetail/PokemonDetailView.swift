@@ -20,6 +20,7 @@ class PokemonDetailView: UIView {
         
         let collectionView = createCollectionView()
         self.collectionView = collectionView
+        self.collectionView?.backgroundColor = .clear
         addSubview(collectionView)
         
         setUpConstraints()
@@ -94,7 +95,7 @@ extension PokemonDetailView {
                                                      bottom: 10,
                                                      trailing: 10)
         
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.8), heightDimension: .fractionalHeight(0.4)), subitems: [item])
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.65), heightDimension: .fractionalHeight(0.4)), subitems: [item])
         
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .groupPagingCentered

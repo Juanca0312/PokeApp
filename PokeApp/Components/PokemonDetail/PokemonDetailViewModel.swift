@@ -6,10 +6,13 @@
 //
 
 import Foundation
+import Combine
 
 final class PokemonDetailViewModel {
     let pokemon: PokemonListItem
     private let pokemonService: PokemonServiceProtocol
+    
+    @Published var pokemonObservable: Pokemon?
     
     enum SectionType {
         case images(viewModels: [PokemonImagesCollectionViewCellViewModel])
@@ -23,14 +26,13 @@ final class PokemonDetailViewModel {
     init(pokemon: PokemonListItem, pokemonService: PokemonServiceProtocol = PokemonService()) {
         self.pokemon = pokemon
         self.pokemonService = pokemonService
-        setUpSections()
     }
     
-    private func setUpSections() {
+    public func setUpSections() {
         sections = [
             .images(viewModels: [
-                .init(),
-                .init()
+                .init(imageURL: pokemonObservable?.imageUrl),
+                .init(imageURL: pokemonObservable?.imageShinyUrl)
             ]),
             .info(viewModels: [
                 .init(),
@@ -60,10 +62,12 @@ final class PokemonDetailViewModel {
         guard let intId = Int(pokemon.id) else {
             fatalError("id not found")
         }
-        pokemonService.getPokemonById(id: intId) { resul in
-            switch resul {
+        pokemonService.getPokemonById(id: intId) { [weak self] result in
+            
+            guard let self = self else { return }
+            switch result {
             case .success(let result):
-                print("resultados")
+                pokemonObservable = result
             case .failure(let failure):
                 print(String(describing: failure))
             }

@@ -6,12 +6,14 @@
 //
 
 import UIKit
+import Combine
 
 class PokemonDetailViewController: UIViewController {
     
     private let pokemonDetailView: PokemonDetailView
     private let viewModel: PokemonDetailViewModel
-    
+    var anyCancellable: [AnyCancellable] = []
+
     init(viewModel: PokemonDetailViewModel) {
         self.viewModel = viewModel
         self.pokemonDetailView = PokemonDetailView(frame: .zero, viewModel: viewModel)
@@ -33,6 +35,22 @@ class PokemonDetailViewController: UIViewController {
         
         pokemonDetailView.collectionView?.dataSource = self
         pokemonDetailView.collectionView?.delegate = self
+        
+        subscription()
+    }
+    
+    private func subscription() {
+        viewModel.$pokemonObservable.sink { [weak self] data in
+            
+            guard let self = self else { return }
+            
+            DispatchQueue.main.async {
+                self.viewModel.setUpSections()
+                self.pokemonDetailView.collectionView?.reloadData()
+                
+            }
+            
+        }.store(in: &anyCancellable)
     }
     
     
@@ -90,7 +108,6 @@ extension PokemonDetailViewController: UICollectionViewDelegate, UICollectionVie
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PokemonImagesCollectionViewCell.cellIdentifier, for: indexPath) as? PokemonImagesCollectionViewCell else {
                 fatalError()
             }
-            cell.backgroundColor = .systemRed
             cell.configure(with: viewModels[indexPath.row])
             return cell
         case .info(let viewModels):
