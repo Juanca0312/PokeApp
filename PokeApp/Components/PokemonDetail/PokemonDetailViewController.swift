@@ -51,6 +51,13 @@ class PokemonDetailViewController: UIViewController {
             }
             
         }.store(in: &anyCancellable)
+        
+        viewModel.$isLoading.sink {[weak self] isLoading in
+            guard let isLoading = isLoading, let self = self else { return }
+            DispatchQueue.main.async {
+                self.pokemonDetailView.showFirstLoading(isLoading: isLoading)
+            }
+        }.store(in: &anyCancellable)
     }
     
     

@@ -12,6 +12,16 @@ class PokemonDetailView: UIView {
     public var collectionView: UICollectionView?
     private let viewModel: PokemonDetailViewModel
     
+    private let spinner: UIImageView = {
+        let pokeball = UIImageView()
+        pokeball.contentMode = .scaleAspectFit
+        pokeball.clipsToBounds = true
+        pokeball.translatesAutoresizingMaskIntoConstraints = false
+        pokeball.image = UIImage(named: "Pokeball")
+        pokeball.rotate()
+        return pokeball
+    }()
+    
     init(frame: CGRect, viewModel: PokemonDetailViewModel) {
         self.viewModel = viewModel
         super.init(frame: frame)
@@ -22,6 +32,7 @@ class PokemonDetailView: UIView {
         self.collectionView = collectionView
         self.collectionView?.backgroundColor = .clear
         addSubview(collectionView)
+        addSubview(spinner)
         
         setUpConstraints()
     }
@@ -37,7 +48,12 @@ class PokemonDetailView: UIView {
             collectionView.topAnchor.constraint(equalTo: topAnchor),
             collectionView.leftAnchor.constraint(equalTo: leftAnchor),
             collectionView.rightAnchor.constraint(equalTo: rightAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: bottomAnchor)
+            collectionView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            
+            spinner.widthAnchor.constraint(equalToConstant: 100),
+            spinner.heightAnchor.constraint(equalToConstant: 100),
+            spinner.centerXAnchor.constraint(equalTo: centerXAnchor),
+            spinner.centerYAnchor.constraint(equalTo: centerYAnchor),
             
         ])
         
@@ -80,6 +96,30 @@ class PokemonDetailView: UIView {
         
         
         
+    }
+    
+    /// Function to show loading on fetching first data
+    /// - Parameter isLoading: True if loading
+    public func showFirstLoading(isLoading: Bool) {
+        guard let collectionView = self.collectionView else { return }
+
+        if isLoading {
+            collectionView.isHidden = true
+            collectionView.alpha = 0
+            
+        } else {
+            //TODO: remove or edit asyncAfter to simulate loading
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+
+                collectionView.isHidden = false
+                UIView.animate(withDuration: 1) {
+                    self.spinner.alpha = 0
+                    collectionView.alpha = 1
+                }
+                
+            }
+
+        }
     }
     
     
@@ -151,4 +191,5 @@ extension PokemonDetailView {
         
         return section
     }
+    
 }

@@ -13,6 +13,8 @@ final class PokemonDetailViewModel {
     private let pokemonService: PokemonServiceProtocol
     
     @Published var pokemonObservable: Pokemon?
+    @Published var isLoading : Bool?
+
     
     enum SectionType {
         case images(viewModels: [PokemonImagesCollectionViewCellViewModel])
@@ -59,6 +61,9 @@ final class PokemonDetailViewModel {
     }
     
     public func fetchPokemon() {
+        
+        self.isLoading = true 
+        
         guard let intId = Int(pokemon.id) else {
             fatalError("id not found")
         }
@@ -71,6 +76,8 @@ final class PokemonDetailViewModel {
             case .failure(let failure):
                 print(String(describing: failure))
             }
+            
+            self.isLoading = false
         }
     }
 }
