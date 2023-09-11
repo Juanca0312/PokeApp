@@ -147,11 +147,11 @@ extension PokemonDetailView {
     private func createInfoSectionLayout() -> NSCollectionLayoutSection {
         let item = NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.33), heightDimension: .fractionalHeight(1.0)))
         item.contentInsets = NSDirectionalEdgeInsets(top: 10,
-                                                     leading: 10,
+                                                     leading: 1,
                                                      bottom: 10,
-                                                     trailing: 10)
+                                                     trailing: 1)
         
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(150)), subitems: [item, item, item])
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(120)), subitems: [item, item, item])
         
         let section = NSCollectionLayoutSection(group: group)
         
