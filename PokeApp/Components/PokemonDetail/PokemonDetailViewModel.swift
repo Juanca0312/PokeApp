@@ -32,7 +32,6 @@ final class PokemonDetailViewModel {
     
     public func setUpSections() {
         guard let pokemonObservable = pokemonObservable else { return }
-        print(pokemonObservable.name, "building sections")
         sections = [
             .images(viewModels: [
                 .init(imageURL: pokemonObservable.imageUrl, pokemonForm: .normal),
