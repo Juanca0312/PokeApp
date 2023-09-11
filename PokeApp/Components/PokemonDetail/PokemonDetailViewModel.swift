@@ -31,15 +31,17 @@ final class PokemonDetailViewModel {
     }
     
     public func setUpSections() {
+        guard let pokemonObservable = pokemonObservable else { return }
+        print(pokemonObservable.name, "building sections")
         sections = [
             .images(viewModels: [
-                .init(imageURL: pokemonObservable?.imageUrl, pokemonForm: .normal),
-                .init(imageURL: pokemonObservable?.imageShinyUrl, pokemonForm: .shiny)
+                .init(imageURL: pokemonObservable.imageUrl, pokemonForm: .normal),
+                .init(imageURL: pokemonObservable.imageShinyUrl, pokemonForm: .shiny)
             ]),
             .info(viewModels: [
-                .init(),
-                .init(),
-                .init()
+                .init(type: .height, value: String(pokemonObservable.heightMeters)),
+                .init(type: .types, types: pokemonObservable.types),
+                .init(type: .weight, value: String(pokemonObservable.weightKGrams))
             ]),
             .stats(viewModels: [
                 .init(),

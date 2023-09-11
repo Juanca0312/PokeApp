@@ -31,4 +31,12 @@ extension Pokemon {
         let pokemonImageStringUrl = Pokemon.imagesStringUrl + "shiny/" + String(self.id) + ".png"
         return URL(string: pokemonImageStringUrl)
     }
+    
+    var heightMeters: Float {
+        Float(height) * 10
+    }
+    var weightKGrams: Float {
+        Float(weight) / 10
+    }
+    
 }

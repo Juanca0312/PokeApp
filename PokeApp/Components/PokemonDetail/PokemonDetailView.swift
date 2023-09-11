@@ -102,23 +102,17 @@ class PokemonDetailView: UIView {
     /// - Parameter isLoading: True if loading
     public func showFirstLoading(isLoading: Bool) {
         guard let collectionView = self.collectionView else { return }
-
+        
         if isLoading {
             collectionView.isHidden = true
             collectionView.alpha = 0
             
         } else {
-            //TODO: remove or edit asyncAfter to simulate loading
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-
-                collectionView.isHidden = false
-                UIView.animate(withDuration: 1) {
-                    self.spinner.alpha = 0
-                    collectionView.alpha = 1
-                }
-                
+            collectionView.isHidden = false
+            UIView.animate(withDuration: 1) {
+                self.spinner.alpha = 0
+                collectionView.alpha = 1
             }
-
         }
     }
     

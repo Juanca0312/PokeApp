@@ -16,7 +16,6 @@ class PokemonInfoCollectionViewCell: UICollectionViewCell {
         label.textColor = .systemGray6
         label.textAlignment = .center
         label.font = .systemFont(ofSize: 18, weight: .light)
-        label.text = "weight"
         return label
     }()
     
@@ -26,7 +25,6 @@ class PokemonInfoCollectionViewCell: UICollectionViewCell {
         label.textAlignment = .center
         label.font = .systemFont(ofSize: 18, weight: .medium)
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "electric / water"
         return label
     }()
     
@@ -60,6 +58,10 @@ class PokemonInfoCollectionViewCell: UICollectionViewCell {
     }
     
     public func configure(with viewModel: PokemonInfoCollectionViewCellViewModel) {
+        titleLabel.text = viewModel.type.rawValue
+        
+        valueLabel.attributedText = viewModel.displayValue
+        
         
     }
 }
