@@ -33,8 +33,8 @@ final class PokemonDetailViewModel {
     public func setUpSections() {
         sections = [
             .images(viewModels: [
-                .init(imageURL: pokemonObservable?.imageUrl),
-                .init(imageURL: pokemonObservable?.imageShinyUrl)
+                .init(imageURL: pokemonObservable?.imageUrl, pokemonForm: .normal),
+                .init(imageURL: pokemonObservable?.imageShinyUrl, pokemonForm: .shiny)
             ]),
             .info(viewModels: [
                 .init(),

@@ -10,6 +10,15 @@ import UIKit
 class PokemonImagesCollectionViewCell: UICollectionViewCell {
     static let cellIdentifier = "PokemonImagesCollectionViewCell"
     
+    private let titleLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textColor = .systemGray6
+        label.textAlignment = .center
+        label.font = .systemFont(ofSize: 18, weight: .light)
+        return label
+    }()
+    
     private let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
@@ -23,6 +32,7 @@ class PokemonImagesCollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         contentView.addSubview(imageView)
+        contentView.addSubview(titleLabel)
         setUpConstraints()
         setUpCell()
     }
@@ -54,9 +64,14 @@ class PokemonImagesCollectionViewCell: UICollectionViewCell {
     private func setUpConstraints() {
         NSLayoutConstraint.activate([
             imageView.topAnchor.constraint(equalTo: contentView.topAnchor),
-            imageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            imageView.bottomAnchor.constraint(equalTo: titleLabel.topAnchor),
             imageView.leftAnchor.constraint(equalTo: contentView.leftAnchor),
             imageView.rightAnchor.constraint(equalTo: contentView.rightAnchor),
+            
+            titleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12),
+            titleLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor),
+            titleLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor),
+            
         ])
     }
     
@@ -66,6 +81,13 @@ class PokemonImagesCollectionViewCell: UICollectionViewCell {
     }
     
     public func configure(with viewModel: PokemonImagesCollectionViewCellViewModel) {
+        
+        switch viewModel.pokemonForm {
+        case .normal:
+            titleLabel.text = "Normal"
+        case .shiny:
+            titleLabel.text = "Shiny"
+        }
         
         viewModel.fetchImage {[weak self] result in
             guard let self = self else { return }

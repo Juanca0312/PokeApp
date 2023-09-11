@@ -9,9 +9,16 @@ import Foundation
 
 final class PokemonImagesCollectionViewCellViewModel {
     private let imageURL: URL?
+    public let pokemonForm: PokemonForm
     
-    init(imageURL: URL?) {
+    init(imageURL: URL?, pokemonForm: PokemonForm) {
         self.imageURL = imageURL
+        self.pokemonForm = pokemonForm
+    }
+    
+    enum PokemonForm {
+        case shiny
+        case normal
     }
     
     public func fetchImage(completion: @escaping (Result<Data, Error>) -> Void) {
