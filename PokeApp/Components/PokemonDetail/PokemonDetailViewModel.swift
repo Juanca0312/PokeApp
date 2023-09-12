@@ -42,14 +42,9 @@ final class PokemonDetailViewModel {
                 .init(type: .types, types: pokemonObservable.types),
                 .init(type: .weight, value: String(pokemonObservable.weightKGrams))
             ]),
-            .stats(viewModels: [
-                .init(),
-                .init(),
-                .init(),
-                .init(),
-                .init(),
-                .init()
-            ]),
+            .stats(viewModels: pokemonObservable.stats.compactMap({
+                return .init(label: $0.stat.name, value: String($0.baseStat))
+            })),
             .damageRelations(viewModels: [
                 .init(),
                 .init(),

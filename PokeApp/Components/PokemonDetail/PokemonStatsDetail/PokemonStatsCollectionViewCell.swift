@@ -15,8 +15,8 @@ class PokemonStatsCollectionViewCell: UICollectionViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .systemGray6
         label.textAlignment = .center
+        label.numberOfLines = 0
         label.font = .systemFont(ofSize: 18, weight: .light)
-        label.text = "HP"
         return label
     }()
     
@@ -26,7 +26,6 @@ class PokemonStatsCollectionViewCell: UICollectionViewCell {
         label.textAlignment = .center
         label.font = .systemFont(ofSize: 18, weight: .medium)
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "200"
         return label
     }()
 
@@ -48,10 +47,13 @@ class PokemonStatsCollectionViewCell: UICollectionViewCell {
     
     private func setUpConstraints() {
         NSLayoutConstraint.activate([
-            valueLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             valueLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor, constant: 10),
+            valueLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor),
+            valueLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor),
             
-            titleLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            
+            titleLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -5),
+            titleLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 5),
             titleLabel.bottomAnchor.constraint(equalTo: valueLabel.topAnchor)
             
         ])
@@ -64,6 +66,7 @@ class PokemonStatsCollectionViewCell: UICollectionViewCell {
     }
     
     public func configure(with viewModel: PokemonStatsCollectionViewCellViewModel) {
-        
+        titleLabel.text = viewModel.label.replacingOccurrences(of: "-", with: " ")
+        valueLabel.text = viewModel.value
     }
 }
