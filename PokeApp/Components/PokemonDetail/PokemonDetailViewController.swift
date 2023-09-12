@@ -13,7 +13,7 @@ class PokemonDetailViewController: UIViewController {
     private let pokemonDetailView: PokemonDetailView
     private let viewModel: PokemonDetailViewModel
     var anyCancellable: [AnyCancellable] = []
-
+    
     init(viewModel: PokemonDetailViewModel) {
         self.viewModel = viewModel
         self.pokemonDetailView = PokemonDetailView(frame: .zero, viewModel: viewModel)
@@ -140,5 +140,29 @@ extension PokemonDetailViewController: UICollectionViewDelegate, UICollectionVie
         
     }
     
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        let sectionType = viewModel.sections[indexPath.section]
+        guard kind == UICollectionView.elementKindSectionHeader,
+              let header = collectionView.dequeueReusableSupplementaryView(
+                ofKind: kind,
+                withReuseIdentifier: SectionTitleCollectionReusableView.identifier,
+                for: indexPath
+              ) as? SectionTitleCollectionReusableView else {
+            fatalError("Unsopported")
+        }
+        
+        switch sectionType {
+        case .images:
+            header.setTitle(title: "")
+        case .info:
+            header.setTitle(title: "Info")
+        case .stats:
+            header.setTitle(title: "Stats")
+        case .damageRelations:
+            header.setTitle(title: "Damage relations")
+        }
+        
+        return header
+    }
     
 }

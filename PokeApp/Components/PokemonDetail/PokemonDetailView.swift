@@ -71,6 +71,9 @@ class PokemonDetailView: UIView {
         collectionView.register(PokemonStatsCollectionViewCell.self, forCellWithReuseIdentifier: PokemonStatsCollectionViewCell.cellIdentifier)
         collectionView.register(PokemonDamageRelationsCollectionViewCell.self, forCellWithReuseIdentifier: PokemonDamageRelationsCollectionViewCell.cellIdentifier)
         
+        //header
+        collectionView.register(SectionTitleCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SectionTitleCollectionReusableView.identifier)
+        
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         
         
@@ -140,15 +143,26 @@ extension PokemonDetailView {
     
     private func createInfoSectionLayout() -> NSCollectionLayoutSection {
         let item = NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.33), heightDimension: .fractionalHeight(1.0)))
-        item.contentInsets = NSDirectionalEdgeInsets(top: 10,
+        item.contentInsets = NSDirectionalEdgeInsets(top: 0,
                                                      leading: 1,
-                                                     bottom: 10,
+                                                     bottom: 0,
                                                      trailing: 1)
         
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(120)), subitems: [item, item, item])
         
-        let section = NSCollectionLayoutSection(group: group)
         
+        let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
+            layoutSize: NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(1.0),
+                heightDimension: .estimated(44)
+            ),
+            elementKind: UICollectionView.elementKindSectionHeader, alignment: .top
+        )
+        
+        
+        let section = NSCollectionLayoutSection(group: group)
+        section.contentInsets = .init(top: 0, leading: 5, bottom: 20, trailing: 5)
+        section.boundarySupplementaryItems = [sectionHeader]
         
         return section
     }
@@ -156,14 +170,24 @@ extension PokemonDetailView {
     
     private func createStatsSectionLayout() -> NSCollectionLayoutSection {
         let item = NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.33), heightDimension: .fractionalHeight(1.0)))
-        item.contentInsets = NSDirectionalEdgeInsets(top: 2,
-                                                     leading: 2,
-                                                     bottom: 2,
-                                                     trailing: 2)
+        item.contentInsets = NSDirectionalEdgeInsets(top: 1,
+                                                     leading: 1,
+                                                     bottom: 1,
+                                                     trailing: 1)
         
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(100)), subitems: [item, item, item])
         
+        let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
+            layoutSize: NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(1.0),
+                heightDimension: .estimated(44)
+            ),
+            elementKind: UICollectionView.elementKindSectionHeader, alignment: .top
+        )
+        
         let section = NSCollectionLayoutSection(group: group)
+        section.contentInsets = .init(top: 0, leading: 5, bottom: 20, trailing: 5)
+        section.boundarySupplementaryItems = [sectionHeader]
         
         
         return section
