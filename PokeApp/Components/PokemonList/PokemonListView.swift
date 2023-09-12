@@ -39,11 +39,11 @@ class PokemonListView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         translatesAutoresizingMaskIntoConstraints = false
-
+        
         addSubview(collectionView)
         addSubview(spinner)
         addConstraints()
-
+        
         spinner.startAnimating()
     }
     
@@ -75,16 +75,16 @@ class PokemonListView: UIView {
             
         } else {
             //TODO: remove or edit asyncAfter to simulate loading
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-
-                self.collectionView.isHidden = false
-                UIView.animate(withDuration: 1) {
-                    self.spinner.alpha = 0
-                    self.collectionView.alpha = 1
-                }
-                
+            //DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            
+            self.collectionView.isHidden = false
+            UIView.animate(withDuration: 1) {
+                self.spinner.alpha = 0
+                self.collectionView.alpha = 1
             }
-
+            
+            
+            
         }
     }
     

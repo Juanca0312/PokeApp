@@ -161,7 +161,7 @@ extension PokemonDetailView {
                                                      bottom: 2,
                                                      trailing: 2)
         
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(150)), subitems: [item, item, item])
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(100)), subitems: [item, item, item])
         
         let section = NSCollectionLayoutSection(group: group)
         

@@ -127,7 +127,6 @@ extension PokemonDetailViewController: UICollectionViewDelegate, UICollectionVie
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PokemonStatsCollectionViewCell.cellIdentifier, for: indexPath) as? PokemonStatsCollectionViewCell else {
                 fatalError()
             }
-            cell.backgroundColor = .systemTeal
             cell.configure(with: viewModels[indexPath.row])
             return cell
         case .damageRelations(let viewModels):
