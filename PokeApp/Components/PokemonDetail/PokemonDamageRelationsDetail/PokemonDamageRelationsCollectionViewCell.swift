@@ -6,10 +6,13 @@
 //
 
 import UIKit
+import Combine
 
 class PokemonDamageRelationsCollectionViewCell: UICollectionViewCell {
     static let cellIdentifier = "PokemonDamageRelationsCollectionViewCell"
     
+    var anyCancellable: [AnyCancellable] = []
+
     private let typeLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -17,7 +20,6 @@ class PokemonDamageRelationsCollectionViewCell: UICollectionViewCell {
         label.textAlignment = .center
         label.numberOfLines = 0
         label.font = .systemFont(ofSize: 18, weight: .bold)
-        label.text = "Ghost"
         return label
     }()
     
@@ -27,7 +29,7 @@ class PokemonDamageRelationsCollectionViewCell: UICollectionViewCell {
         label.textColor = .systemGray6
         label.textAlignment = .left
         label.numberOfLines = 0
-        label.font = .systemFont(ofSize: 18, weight: .light)
+        label.font = .systemFont(ofSize: 18, weight: .medium)
         label.text = "Strong Against"
         return label
     }()
@@ -36,9 +38,11 @@ class PokemonDamageRelationsCollectionViewCell: UICollectionViewCell {
         let label = UILabel()
         label.textColor = .black
         label.textAlignment = .left
-        label.font = .systemFont(ofSize: 18, weight: .medium)
+        label.font = .systemFont(ofSize: 18, weight: .regular)
+        label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "fire / water"
+        label.backgroundColor = .black.withAlphaComponent(0.3)
+
         return label
     }()
     
@@ -48,7 +52,7 @@ class PokemonDamageRelationsCollectionViewCell: UICollectionViewCell {
         label.textColor = .systemGray6
         label.textAlignment = .left
         label.numberOfLines = 0
-        label.font = .systemFont(ofSize: 18, weight: .light)
+        label.font = .systemFont(ofSize: 18, weight: .medium)
         label.text = "Weakness"
 
         return label
@@ -59,20 +63,21 @@ class PokemonDamageRelationsCollectionViewCell: UICollectionViewCell {
         label.textColor = .black
         label.textAlignment = .left
         label.numberOfLines = 0
-        label.font = .systemFont(ofSize: 18, weight: .medium)
+        label.font = .systemFont(ofSize: 18, weight: .regular)
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "steel"
+        label.backgroundColor = .black.withAlphaComponent(0.3)
         return label
     }()
 
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
+                
         setUpView()
         
         setUpConstraints()
     }
+    
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -93,23 +98,23 @@ class PokemonDamageRelationsCollectionViewCell: UICollectionViewCell {
         NSLayoutConstraint.activate([
             typeLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 7),
             typeLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 5),
-            typeLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: 5),
+            typeLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -5),
             
             strongTitle.topAnchor.constraint(equalTo: typeLabel.bottomAnchor, constant: 7),
             strongTitle.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 5),
-            strongTitle.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: 5),
+            strongTitle.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -5),
             
             strongValue.topAnchor.constraint(equalTo: strongTitle.bottomAnchor),
             strongValue.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 5),
-            strongValue.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: 5),
+            strongValue.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -5),
             
             weaknessTitle.topAnchor.constraint(equalTo: strongValue.bottomAnchor, constant: 7),
             weaknessTitle.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 5),
-            weaknessTitle.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: 5),
+            weaknessTitle.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -5),
             
             weaknessValue.topAnchor.constraint(equalTo: weaknessTitle.bottomAnchor),
             weaknessValue.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 5),
-            weaknessValue.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: 5),
+            weaknessValue.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -5),
         ])
         
     }
@@ -123,6 +128,20 @@ class PokemonDamageRelationsCollectionViewCell: UICollectionViewCell {
     }
     
     public func configure(with viewModel: PokemonDamageRelationsCollectionViewCellViewModel) {
-        
+        viewModel.$typeObservable.sink { [weak self] data in
+            
+            guard let self = self, let data = data else { return }
+            
+            DispatchQueue.main.async {
+                self.typeLabel.text = data.name.capitalized
+                self.strongValue.attributedText = viewModel.arraysToAttributedString(
+                    data.damageRelations.doubleDamageTo
+                )
+                self.weaknessValue.attributedText = viewModel.arraysToAttributedString(
+                    data.damageRelations.doubleDamageFrom
+                )
+            }
+            
+        }.store(in: &anyCancellable)
     }
 }
