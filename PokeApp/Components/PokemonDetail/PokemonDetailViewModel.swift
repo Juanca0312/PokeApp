@@ -45,10 +45,9 @@ final class PokemonDetailViewModel {
             .stats(viewModels: pokemonObservable.stats.compactMap({
                 return .init(label: $0.stat.name, value: String($0.baseStat))
             })),
-            .damageRelations(viewModels: [
-                .init(),
-                .init(),
-            ])
+            .damageRelations(viewModels: pokemonObservable.types.compactMap({
+                return .init(typeUrl: URL(string: $0.type.url))
+            }))
         ]
     }
     

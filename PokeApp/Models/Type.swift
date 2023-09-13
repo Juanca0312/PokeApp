@@ -12,6 +12,29 @@ struct `Type`: Codable {
     let type: TypeInfo
 }
 
+struct TypeResponse: Codable {
+    let damageRelations: DamageRelations
+    let name: String
+    
+    enum CodingKeys: String, CodingKey {
+        case damageRelations = "damage_relations"
+        case name = "name"
+    }
+}
+
+struct DamageRelations: Codable {
+    let doubleDamageFrom, doubleDamageTo, halfDamageFrom, halfDamageTo, noDamageFrom, noDamageTo: [TypeInfo]
+
+    enum CodingKeys: String, CodingKey {
+        case doubleDamageFrom = "double_damage_from"
+        case doubleDamageTo = "double_damage_to"
+        case halfDamageFrom = "half_damage_from"
+        case halfDamageTo = "half_damage_to"
+        case noDamageFrom = "no_damage_from"
+        case noDamageTo = "no_damage_to"
+    }
+}
+
 struct TypeInfo: Codable {
     let name: TypeName
     let url: String

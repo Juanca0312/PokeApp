@@ -34,5 +34,12 @@ extension Endpoint {
         return Endpoint(path: "/pokemon")
     }
     
+    static public func typeEndpoint(id: Int? = nil) -> Endpoint {
+        if let id = id {
+            return Endpoint(path: "/type/\(id)")
+        }
+        return Endpoint(path: "/type")
+    }
+    
 }
 
