@@ -10,20 +10,116 @@ import UIKit
 class PokemonDamageRelationsCollectionViewCell: UICollectionViewCell {
     static let cellIdentifier = "PokemonDamageRelationsCollectionViewCell"
     
+    private let typeLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textColor = .systemGray6
+        label.textAlignment = .center
+        label.numberOfLines = 0
+        label.font = .systemFont(ofSize: 18, weight: .bold)
+        label.text = "Ghost"
+        return label
+    }()
+    
+    private let strongTitle: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textColor = .systemGray6
+        label.textAlignment = .left
+        label.numberOfLines = 0
+        label.font = .systemFont(ofSize: 18, weight: .light)
+        label.text = "Strong Against"
+        return label
+    }()
+    
+    private let strongValue: UILabel = {
+        let label = UILabel()
+        label.textColor = .black
+        label.textAlignment = .left
+        label.font = .systemFont(ofSize: 18, weight: .medium)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "fire / water"
+        return label
+    }()
+    
+    private let weaknessTitle: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textColor = .systemGray6
+        label.textAlignment = .left
+        label.numberOfLines = 0
+        label.font = .systemFont(ofSize: 18, weight: .light)
+        label.text = "Weakness"
+
+        return label
+    }()
+    
+    private let weaknessValue: UILabel = {
+        let label = UILabel()
+        label.textColor = .black
+        label.textAlignment = .left
+        label.numberOfLines = 0
+        label.font = .systemFont(ofSize: 18, weight: .medium)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "steel"
+        return label
+    }()
+
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
+        
+        setUpView()
+        
+        setUpConstraints()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+    private func setUpView() {
+        contentView.backgroundColor = .tertiaryLabel
+        contentView.layer.cornerRadius = 8
+        contentView.addSubview(typeLabel)
+        contentView.addSubview(strongTitle)
+        contentView.addSubview(strongValue)
+        contentView.addSubview(weaknessTitle)
+        contentView.addSubview(weaknessValue)
+    }
+    
     private func setUpConstraints() {
+        
+        NSLayoutConstraint.activate([
+            typeLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 7),
+            typeLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 5),
+            typeLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: 5),
+            
+            strongTitle.topAnchor.constraint(equalTo: typeLabel.bottomAnchor, constant: 7),
+            strongTitle.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 5),
+            strongTitle.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: 5),
+            
+            strongValue.topAnchor.constraint(equalTo: strongTitle.bottomAnchor),
+            strongValue.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 5),
+            strongValue.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: 5),
+            
+            weaknessTitle.topAnchor.constraint(equalTo: strongValue.bottomAnchor, constant: 7),
+            weaknessTitle.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 5),
+            weaknessTitle.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: 5),
+            
+            weaknessValue.topAnchor.constraint(equalTo: weaknessTitle.bottomAnchor),
+            weaknessValue.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 5),
+            weaknessValue.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: 5),
+        ])
         
     }
     
     override func prepareForReuse() {
         super.prepareForReuse()
+        strongTitle.text = ""
+        strongValue.text = ""
+        weaknessTitle.text = ""
+        weaknessValue.text = ""
     }
     
     public func configure(with viewModel: PokemonDamageRelationsCollectionViewCellViewModel) {

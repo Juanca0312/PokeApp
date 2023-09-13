@@ -203,8 +203,17 @@ extension PokemonDetailView {
         
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.6), heightDimension: .absolute(300)), subitems: [item])
         
+        let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
+            layoutSize: NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(1.0),
+                heightDimension: .estimated(44)
+            ),
+            elementKind: UICollectionView.elementKindSectionHeader, alignment: .top
+        )
+        
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .groupPagingCentered
+        section.boundarySupplementaryItems = [sectionHeader]
         
         
         return section
