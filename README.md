@@ -6,7 +6,12 @@ Simple iOS app that displays a list of Pokemons and their details.
 * Detail: Show Pokemon additional info
 
 ## Technologies Used
-Swift
-UIKit
-MVVM
-Unit Tests
+- Swift, UIKit
+- Architecture: MVVM
+- Programmatic Views, UICollectionViewFlowLayout, UICollectionViewCompositionalLayout
+
+## Screenshots
+
+![Pokemon List](https://github.com/Juanca0312/PokeApp/edit/main/screenshots/main.png)
+
+![Pokemon Detail](https://github.com/Juanca0312/PokeApp/edit/main/screenshots/detail.png)
