@@ -12,6 +12,6 @@ Simple iOS app that displays a list of Pokemons and their details.
 
 ## Screenshots
 
-![Pokemon List](https://github.com/Juanca0312/PokeApp/blob/main/screenshots/main.png){width=200px}
+<img src="https://github.com/Juanca0312/PokeApp/blob/main/screenshots/main.png" alt="Pokemon List" width="200"/>
+<img src="https://github.com/Juanca0312/PokeApp/blob/main/screenshots/detail.png" alt="Pokemon Detail" width="200"/>
 
-![Pokemon Detail](https://github.com/Juanca0312/PokeApp/blob/main/screenshots/detail.png){width=200px}
