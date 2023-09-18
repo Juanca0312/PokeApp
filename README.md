@@ -2,7 +2,7 @@
 Simple iOS app that displays a list of Pokemons and their details.
 
 ## Features
-* Pokemon List: Shows pokemons with pagination and filter
+* Pokemon List: Shows pokemons with pagination
 * Detail: Show Pokemon additional info
 
 ## Technologies Used
